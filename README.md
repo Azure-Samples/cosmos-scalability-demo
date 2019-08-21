@@ -16,7 +16,8 @@ The second part demonstrates the ability query data from an Azure Cosmos DB coll
     - [Deploying your VMs](#Azure-VM-Setup)
     - [Troubleshooting Connectivity](#Azure-NSG-Setup)
     - [Deploying the application](#Azure-App-Deployment)
-    - [Scaling your your collection up for Demo](#Azure-Scale)
+    - [Scaling your collection up for Demo](#Azure-Scale)
+    - [Cleaning up after your Demo](#Azure-Cleanup)
 - [Performance tips](#additional-pointers)
 - [Contributing & Feedback](#contributing--feedback)
 - [Other relevant projects](#relevant-projects)
@@ -31,12 +32,25 @@ This project includes samples, documentation and performance tips for consuming 
 
 In order to deliver this demonstration you will need an Azure Subscription within wich you will be deploying the requisit Azure Service resources, specificay an Azure Cosmos DB Account, Database and Collection and 2 Azure Visual Studio 2019 VMs
 
+### Deploying the application
+On both VMs open a Command Prompt and execute the following steps to create a local folder to download you application code into and clone the demo repo to the local folder.
+
+Batchfile
+    md C:\CosmosDemo
+    git clone https://github.com/Azure-Samples/cosmos-scalability-demo C:\CosmosDemo
+
+see git-clone.png
+
+Batchfile
+    cd \CosmosDemo\ScalabilityDemo
+
+
 ## The original sample application 
 You can find the complete sample application program consuming the bulk import API [here](https://github.com/Azure/azure-cosmosdb-bulkexecutor-dotnet-getting-started/blob/master/BulkImportSample/BulkImportSample/Program.cs) - which generates random documents to be then bulk imported into an Azure Cosmos DB collection. You can configure the application settings in *appSettings* [here](https://github.com/Azure/azure-cosmosdb-bulkexecutor-dotnet-getting-started/blob/master/BulkImportSample/BulkImportSample/App.config). 
 
 Additionaly the associated documentation will provide you with additional insight into the inner workings of the demostation code provided here.
 
-## Microsoft.Azure.CosmosDB.BulkExecutor Nnget package 
+## Microsoft.Azure.CosmosDB.BulkExecutor nuget package 
 You can download the Microsoft.Azure.CosmosDB.BulkExecutor nuget package from [here](https://www.nuget.org/packages/Microsoft.Azure.CosmosDB.BulkExecutor/).
 
 ------------------------------------------
