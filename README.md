@@ -2,17 +2,16 @@
 ==========================================
 
 This Azure Cosmos DB Scalability Demo has been crafted showcasing Cosmos DB's ability to ingest records at scale whilst still providing the flexibility to be scaled back down when not required along the ability to reduce application latency by replicating data to a region closest to the application and thereby increasing application responsiveness.
-
 The first part demonstrates the functionality provided by The Azure Cosmos DB BulkExecutor library for .NET which provides developers out-of-the-box functionality to perform bulk operations in [Azure Cosmos DB](http://cosmosdb.com) and scale the collections allocated RU/s up and down as needed.
 
-The second part demonstrates the ability query data from an Azure Cosmos DB collection geographically   co-located with the application through the use of geo-replication, thereby reducing the round trip latency of the query and in turn increasing application responsiveness. 
+The second part demonstrates the ability query data from an Azure Cosmos DB collection geographically co-located with the application through the use of geo-replication, thereby reducing the round trip latency of the query and in turn increasing application responsiveness.
 
 <details>
 <summary><strong><em>Table of Contents</em></strong></summary>
 
 - [Setting up your environment](#Azure-Setup)
-    - [Deploying your Azure Cosmos DB Account, Database and Collection](#Azure-CosmosDB-Setup)
     - [Deploying your VMs](#Azure-VM-Setup)
+    - [Deploying your Azure Cosmos DB account, database and container](#Azure-CosmosDB-Setup)
     - [Troubleshooting Connectivity](#Azure-NSG-Setup)
     - [Deploying the application](#Azure-App-Deployment)
     - [Scaling your collection up for Demo](#Azure-Scale)
@@ -25,19 +24,70 @@ The second part demonstrates the ability query data from an Azure Cosmos DB coll
 
 ## Setting up your Azure environment
 
-In order to deliver this demonstration you will need an Azure Subscription within which you will be deploying the requisit Azure Service resources, specificaly an Azure Cosmos DB account, database and collection and 2 Azure Visual Studio 2019 VMs onto which we will install the demo solution.
+In order to deliver this demonstration you will need an Azure Subscription within which you will be deploying the requisite Azure Service resources, specifically an Azure Cosmos DB account, database and collection and 2 Azure Visual Studio 2019 VMs onto which we will install the demo solution.
+For this demonstration you will need to choose two Azure regions, preferably with large geographical separation. For example a US and Europe or Asian region. We will be deploying a VM into each of the regions chosen and an Azure Cosmos DB collection replicated between these two chosen regions. Whist it is not important which two regions you choose, it is important to ensure that you remain consistent with deployment of the resources into these two regions throughout the setup process.
+In the examples we will be using West US 2 and West Europe
 
-For this demonstation you will need to choose two Azure regions, preferablely with large geographical seperation. For example a US and Europe or Asian region. We will be deploying a VM into each of the regions chosen and an Azure Cosmos DB collection replicated between these two chosen regions. Whist it is not important which two regions you choose, it is important to ensure that you remain consistent with deployment of the resources into these two regions throughout the setup process.  
+First, login to the Azure portal
 
-### Creating your VMs
+You will need to create a resource group of your choice contain all the resources for this demo. Whist not strictly necessary to a single resource group consistently using a single resource group will allow for speedy clean up when you finished using the demo environment.
 
-Login to the Azure portal
+### Creating Azure Cosmos DB account, database and container
 
-Step 1. The first step is to create a resource group of your choice contain all the resources for this demo. Whist not stictly nessary to a single resource group consistently using a signge resource group will allow for speedy clean up when you finished using the demo environment.
+In this step you will need to an Azure Cosmos DB account, database and container
+In the Portal add a resource for an Azure Cosmos DB Account
+Configure this account to use the Core (SQL) API and select the first of the two regions call this account scaledemo
 
-Step 2. The second step is to create a VM base on the Visual Studio images within the Azure Marketplace.
-see https://docs.microsoft.com/en-us/azure/virtual-machines/windows/using-visual-studio-vm
+ 1. ![Azure Cosmos DB Account](./images/cosmosdb-account.png)
 
+Once created open the Cosmos DB account resource and add a container.
+
+  ![Azure Cosmos DB Container](./images/cosmosdb-container-1.png)
+
+Ensure that Provision database throughput is unchecked 
+And that the remainder of the configuration is as follows:
+•	Database id: ScaleTest
+•	Container id: VehicleTest
+•	Partition ket: /vin
+
+  ![Azure Cosmos DB Container](./images/cosmosdb-container-2.png)
+
+Select the Throughput RU/s to be the maximum value that you want to demonstrate at. 50000 RU/s will give you opportunity to demonstrate a significant number of insert operations per second. However also not that leaving this configuration running for any extended period of time will accrue a fairly large expense to your Azure bill. 
+
+Recommendation: reduce the RU/s back down to a lower level once the Container has been created 
+
+### Enabling Azure Cosmos DB account global replication
+
+Once the Container has deployed you can now configure Azure Cosmos DB global replication for the account.
+Select Replicate data globally from the settings menu within the account, on the left.
+
+![Azure Cosmos DB Replication](./images/cosmosdb-replicate-1.png)
+
+Then tick the region on the map that matches the second region that you have previously chosen and click save. 
+On the right-hand side of the configuration you should see a region configuration that has a write region and read region that match your two chosen regions.
+
+![Azure Cosmos DB Replication](./images/cosmosdb-replicate-2.png)
+
+### Creating Azure Virtual Machines
+
+In this step you will need to create two Azure virtual machines (VM) based on the Visual Studio images within the Azure Marketplace. Using Visual Studio in a preconfigured Azure virtual machine (VM) is a quick, easy way to go from nothing to an up-and-running development environment without the need to install all the required software to complete this demonstration.
+From the Marketplace within Azure portal select the “Visual Studio 2019 Latest” image 
+
+![Azure VM Creation](./images/vm-select.png)
+
+and then select the Visual Studio 2019 Community Edition on Windows 10
+
+![Azure VM Creation](./images/vm-select-edition.png)
+
+see https://docs.microsoft.com/en-us/azure/virtual-machines/windows/using-visual-studio-vm.
+
+When configuring the first VM select the first of the two regions you chose, and the select second region you chose when configuring the second VM.
+
+![Azure VM Creation 1](./images/vm1-config.png)
+
+![Azure VM Creation 2](./images/vm2-config.png)
+
+###
 
 
 ### Troubleshooting Connectivity to VMs
