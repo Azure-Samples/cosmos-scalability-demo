@@ -10,7 +10,6 @@ The second part demonstrates the ability query data from an Azure Cosmos DB coll
 <details>
 <summary><strong><em>Table of Contents</em></strong></summary>
 
-- [Consuming the Microsoft Azure Cosmos DB BulkExecutor .NET library](#nuget)
 - [Setting up your environment](#Azure-Setup)
     - [Deploying your Azure Cosmos DB Account, Database and Collection](#Azure-CosmosDB-Setup)
     - [Deploying your VMs](#Azure-VM-Setup)
@@ -24,15 +23,28 @@ The second part demonstrates the ability query data from an Azure Cosmos DB coll
 
 </details>
 
-## Consuming the Microsoft Azure Cosmos DB BulkExecutor .NET library
-
-This project includes samples, documentation and performance tips for consuming the BulkExecutor library. You can download the official public NuGet package from [here](https://www.nuget.org/packages/Microsoft.Azure.CosmosDB.BulkExecutor/).
-
 ## Setting up your Azure environment
 
-In order to deliver this demonstration you will need an Azure Subscription within wich you will be deploying the requisit Azure Service resources, specificay an Azure Cosmos DB Account, Database and Collection and 2 Azure Visual Studio 2019 VMs
+In order to deliver this demonstration you will need an Azure Subscription within which you will be deploying the requisit Azure Service resources, specificaly an Azure Cosmos DB account, database and collection and 2 Azure Visual Studio 2019 VMs onto which we will install the demo solution.
 
-### Deploying the application
+For this demonstation you will need to choose two Azure regions, preferablely with large geographical seperation. For example a US and Europe or Asian region. We will be deploying a VM into each of the regions chosen and an Azure Cosmos DB collection replicated between these two chosen regions. Whist it is not important which two regions you choose, it is important to ensure that you remain consistent with deployment of the resources into these two regions throughout the setup process.  
+
+### Creating your VMs
+
+Login to the Azure portal
+
+Step 1. The first step is to create a resource group of your choice contain all the resources for this demo. Whist not stictly nessary to a single resource group consistently using a signge resource group will allow for speedy clean up when you finished using the demo environment.
+
+Step 2. The second step is to create a VM base on the Visual Studio images within the Azure Marketplace.
+see https://docs.microsoft.com/en-us/azure/virtual-machines/windows/using-visual-studio-vm
+
+
+
+### Troubleshooting Connectivity to VMs
+For additional information on how to trouble shoot the most common RDP connectiviy issues see.
+https://docs.microsoft.com/en-us/azure/virtual-machines/troubleshooting/troubleshoot-rdp-nsg-problem
+
+### Deploying the solution
 On both VMs open a Command Prompt and execute the following steps to create a local folder to download you application code into and clone the demo repo to the local folder.
 
 Batchfile
@@ -43,7 +55,15 @@ see git-clone.png
 
 Batchfile
     cd \CosmosDemo\ScalabilityDemo
+    CosmosDemo.sln
+this will open the solution in Visual Studio 2019
 
+Alternativly open File Explorer, browse to the C:\CosmosDemo\ScalabilityDemo and double click the CosmosDemo.sln wich will open the solution in Visual Studio 2019 without the need to open a command prompt to do so.
+
+## Opening Visual Studio 2019 for the first time
+
+You will be required to sign into the installed Visual Studio Community edition the first time you run it. 
+For additional details see https://docs.microsoft.com/en-us/visualstudio/ide/signing-in-to-visual-studio?view=vs-2019
 
 ## The original sample application 
 You can find the complete sample application program consuming the bulk import API [here](https://github.com/Azure/azure-cosmosdb-bulkexecutor-dotnet-getting-started/blob/master/BulkImportSample/BulkImportSample/Program.cs) - which generates random documents to be then bulk imported into an Azure Cosmos DB collection. You can configure the application settings in *appSettings* [here](https://github.com/Azure/azure-cosmosdb-bulkexecutor-dotnet-getting-started/blob/master/BulkImportSample/BulkImportSample/App.config). 
