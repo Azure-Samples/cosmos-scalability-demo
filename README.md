@@ -87,59 +87,52 @@ When configuring the first VM select the first of the two regions you chose, and
 
 ![Azure VM Creation 2](./images/vm2-config.png)
 
-###
-
-
 ### Troubleshooting Connectivity to VMs
-For additional information on how to trouble shoot the most common RDP connectiviy issues see.
-https://docs.microsoft.com/en-us/azure/virtual-machines/troubleshooting/troubleshoot-rdp-nsg-problem
 
-### Deploying the solution
+For additional information on how to trouble shoot the most common RDP connectivity issues see. https://docs.microsoft.com/en-us/azure/virtual-machines/troubleshooting/troubleshoot-rdp-nsg-problem
+Deploying the solution
+
 On both VMs open a Command Prompt and execute the following steps to create a local folder to download you application code into and clone the demo repo to the local folder.
-
-Batchfile
     md C:\CosmosDemo
     git clone https://github.com/Azure-Samples/cosmos-scalability-demo C:\CosmosDemo
-
-see git-clone.png
-
-Batchfile
     cd \CosmosDemo\ScalabilityDemo
     CosmosDemo.sln
-this will open the solution in Visual Studio 2019
+The above will open the solution in Visual Studio 2019.
 
-Alternativly open File Explorer, browse to the C:\CosmosDemo\ScalabilityDemo and double click the CosmosDemo.sln wich will open the solution in Visual Studio 2019 without the need to open a command prompt to do so.
+Alternatively, open File Explorer, browse to the C:\CosmosDemo\ScalabilityDemo and double click the CosmosDemo.sln which will open the solution in Visual Studio 2019 without the need to open a command prompt to do so.
 
-## Opening Visual Studio 2019 for the first time
+### Opening Visual Studio 2019 for the first time
+You will be required to sign into the installed Visual Studio Community edition the first time you run it. For additional details see https://docs.microsoft.com/en-us/visualstudio/ide/signing-in-to-visual-studio?view=vs-2019
 
-You will be required to sign into the installed Visual Studio Community edition the first time you run it. 
-For additional details see https://docs.microsoft.com/en-us/visualstudio/ide/signing-in-to-visual-studio?view=vs-2019
+### Configuring the solution for your environment
+Once opened within Visual Studio you will see two projects within the solution both of which have an App.,config file. These need to edited to reflect the configuration of your Azure environment 
+ 
+The EndPointUrl and AthorizationKey need to set to the values that you retrieve from your Azure portal in App.config for both the ScaleThoughputDemo project and the GlobalDistributionDemo project.
+ 
+### Running you ScaleThoughputDemo
+You should now be in a position run your ScaleThoughputDemo application successfully 
+You can adjust the NumberOfDocumentsToImport and NumberOfBatches setting within the appSettings section of the App.config file to your requirements, depending on how much data you wish to load, and dependent on the number of RU/s configured the time it will take in your demonstration. Experiment with these settings at the RU configuration to find a combination that suits your demonstration.
+To run the app with maximum performance, select Debug  Start without debugging from the Visual Studio menu. Or just press Ctrl+F5.
+ 
 
-## The original sample application 
-You can find the complete sample application program consuming the bulk import API [here](https://github.com/Azure/azure-cosmosdb-bulkexecutor-dotnet-getting-started/blob/master/BulkImportSample/BulkImportSample/Program.cs) - which generates random documents to be then bulk imported into an Azure Cosmos DB collection. You can configure the application settings in *appSettings* [here](https://github.com/Azure/azure-cosmosdb-bulkexecutor-dotnet-getting-started/blob/master/BulkImportSample/BulkImportSample/App.config). 
+### Running you GlobalDistributionDemo
+You should also now be in a position run your GlobalDistributionDemo application successfully.
+The only additional step required to do that from within Visual Studio is to set the GlobalDistributionDemo application to be the solution startup project.
+Note that this step will need to be done on both VMs as you are going to want to run this application in both locations to demonstrate the differences in query latency.
+Right click on the GlobalDistributionDemo app in the Solution Explorer pane within Visual Studio and select Set as StartUp Project
+ 
+Again you should be able to just run the application by pressing F5 or selecting the options from the menu. 
+ 
+## The original sample application
+You can find the complete sample application program consuming the bulk import API here - which generates random documents to be then bulk imported into an Azure Cosmos DB container. You can configure the application settings in appSettings here.
+Additionally, the associated documentation will provide you with additional insight into the inner workings of the demonstration code provided here.
+Microsoft.Azure.CosmosDB.BulkExecutor nuget package
+You can download the Microsoft.Azure.CosmosDB.BulkExecutor nuget package from here.
 
-Additionaly the associated documentation will provide you with additional insight into the inner workings of the demostation code provided here.
+### Contributing & feedback
+This project has adopted the Microsoft Open Source Code of Conduct. For more information see the Code of Conduct FAQ or contactopencode@microsoft.com with any additional questions or comments.
+See CONTRIBUTING.md for contribution guidelines.
+To give feedback and/or report an issue, open a GitHub Issue.
 
-## Microsoft.Azure.CosmosDB.BulkExecutor nuget package 
-You can download the Microsoft.Azure.CosmosDB.BulkExecutor nuget package from [here](https://www.nuget.org/packages/Microsoft.Azure.CosmosDB.BulkExecutor/).
-
-------------------------------------------
-## Contributing & feedback
-
-This project has adopted the [Microsoft Open Source Code of
-Conduct](https://opensource.microsoft.com/codeofconduct/).  For more information
-see the [Code of Conduct
-FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact
-[opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional
-questions or comments.
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
-
-To give feedback and/or report an issue, open a [GitHub
-Issue](https://help.github.com/articles/creating-an-issue/).
-
-------------------------------------------
-
-## Other relevant projects
-
-* [Cosmos DB BulkExecutor library for Java](https://github.com/Azure/azure-cosmosdb-bulkexecutor-java-getting-started)
+### Other relevant projects
+•	Cosmos DB BulkExecutor library for Java
