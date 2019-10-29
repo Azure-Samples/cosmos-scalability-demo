@@ -29,7 +29,7 @@ namespace CosmosDemo
                 if (result.KeyChar == '1')
                 {
                     Console.Clear();
-                    Console.WriteLine("Enter throughput (10,000, 50,000, 100,000");
+                    Console.WriteLine("Enter throughput (10,000, 50,000, 100,000, 300,000)");
                     int throughput = Convert.ToInt32(Console.ReadLine());
                     await scaleThroughput.ExecuteAsync(throughput);
                 }

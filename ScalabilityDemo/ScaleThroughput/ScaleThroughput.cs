@@ -138,14 +138,15 @@ namespace CosmosDemo
                             itemsCreated += 1;
                             ruConsumed += Convert.ToInt32(task.Result.RequestCharge); 
                             elapsedMilliseconds = stopwatch.ElapsedMilliseconds;
-                            elapsedSeconds = (elapsedMilliseconds / 1000) + 1;
+                            elapsedSeconds = (elapsedMilliseconds < 1000) ? 1 : (elapsedMilliseconds / 1000);
                             string status = $"Worker {workerId} Inserted {itemsCreated} docs @ {(itemsCreated / elapsedSeconds)} writes/s, {ruConsumed / elapsedSeconds} RU/s in {elapsedSeconds} sec";
                             results.AddOrUpdate(workerId, status, (workerId, x) => { return status; });
                         }
                     }));
             }
-            stopwatch.Stop();
+            
             await Task.WhenAll(tasks);
+            stopwatch.Stop();
         }
         private async Task OutputWorkerStats()
         {
