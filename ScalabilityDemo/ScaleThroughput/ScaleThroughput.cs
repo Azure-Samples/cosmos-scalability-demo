@@ -78,6 +78,9 @@ namespace CosmosDemo
                 //Task to output worker progress from concurrent dictionary every second
                 await Task.Factory.StartNew(() => OutputWorkerStats());
 
+                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Start();
+
                 List<Task> tasks = new List<Task>(workers);
                 for (int workerId = 0; workerId < workers; workerId++)
                 {
@@ -87,7 +90,9 @@ namespace CosmosDemo
 
                 await Task.WhenAll(tasks);
                 complete = true; //Turn off OutputWorkerStats()
-                OutputFinalStats();
+                stopwatch.Stop();
+                long elapsed = stopwatch.ElapsedMilliseconds;
+                OutputFinalStats(elapsed);
                 Console.WriteLine("\nPress any key to continue.");
                 Console.ReadKey();
             }
@@ -180,7 +185,7 @@ namespace CosmosDemo
                 }
             }
         }
-        private void OutputFinalStats()
+        private void OutputFinalStats(long elapsed)
         {
             Console.Clear();
 
@@ -192,6 +197,7 @@ namespace CosmosDemo
                 string r = item.Value;
                 Console.WriteLine(r);
             }
+            Console.WriteLine($"Total Elapsed time: {elapsed / 1000}");
             Console.WriteLine("---------------------------------------------------------------------\n");
         }
         public async Task Initialize()
