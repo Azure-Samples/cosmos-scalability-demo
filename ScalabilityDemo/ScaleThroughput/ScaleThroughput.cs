@@ -48,7 +48,7 @@ namespace CosmosDemo
                 {
                     ApplicationRegion = "West US 2",
                     ConnectionMode = ConnectionMode.Direct,
-                    AllowBulkExecution = false
+                    AllowBulkExecution = true
                 });
             }
             catch (CosmosException e)
