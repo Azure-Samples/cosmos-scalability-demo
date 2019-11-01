@@ -1,0 +1,41 @@
+Demo Notes
+
+Vehicle Test container
+Settings, throughput to 50,000
+we will write 1M items to this.
+flip to VS, show the sample document.
+Show app config for NumberOfDocumentsToImport
+Run the ScaleThroughput demo
+Go back into Data Explorer and see all the items in there.
+Go rerun with 100,000 RU.
+
+Run Global Distribution Demo.
+Go back to Data Explorer, get a Vin number from an item.
+Insert that as the where for the vin in the query to run.
+Show the application region for why it will run fast for in region read
+open portal to show replicate data globally, show the regions, West US and Southeast Asia.
+Show adding a region (don't save).
+Then talk about having three VM's in both regions.
+Open VM in southeast asia.
+(Misconfigure the app region to point to West US 2)
+Run the demo. Show slow latency.
+Go to app region and fix.
+Rerun demo.
+
+Change Schema
+(see query with new property)
+Open data explorer
+show a item.
+Ask audience what property they want.
+Add it to the item with a value.
+"As soon as I add this it gets indexed so I can query for it"
+Rewrite the query to include new property and value in where clause.
+rerun demo.
+"No need to talk to a DevOps guy to create a new schema. No downtime"
+
+
+
+
+
+
+
